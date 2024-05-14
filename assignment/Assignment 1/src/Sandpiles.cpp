@@ -7,19 +7,19 @@
 using namespace std;
 
 void dropSandOn(Grid<int>& world, int row, int col) {
-
-
-
-    /* TODO: Delete this line and the three after it, then implement this function. */
-    (void) world;
-    (void) row;
-    (void) col;
+    if(world.inBounds(row, col)){
+        if(world[row][col] + 1 < 4){
+            world[row][col] += 1;
+        }
+        else {
+            world[row][col] = 0;
+            dropSandOn(world, row - 1, col -1);
+            dropSandOn(world, row + 1, col -1);
+            dropSandOn(world, row - 1, col +1);
+            dropSandOn(world, row + 1, col +1);
+        }
+    }
 }
-
-
-
-
-
 
 /* * * * * * Provided Test Cases * * * * * */
 
