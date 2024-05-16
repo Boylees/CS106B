@@ -6,11 +6,36 @@ using namespace std;
 Grid<bool> floodedRegionsIn(const Grid<double>& terrain,
                             const Vector<GridLocation>& sources,
                             double height) {
-    /* TODO: Delete this line and the next four lines, then implement this function. */
-    (void) terrain;
-    (void) sources;
-    (void) height;
-    return {};
+    Grid<bool> flooded(terrain.numRows(), terrain.numCols(), false);
+    Queue<GridLocation> queue;
+
+    // 处理初始水源位置
+    for (const auto& source : sources) {
+        if (terrain.inBounds(source.row, source.col) && terrain[source.row][source.col] <= height) {
+            flooded[source.row][source.col] = true;
+            queue.enqueue(source);
+        }
+    }
+
+    // 四个基本方向
+    vector<pair<int, int>> directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+
+    // 广度优先搜索（BFS）
+    while (!queue.isEmpty()) {
+        GridLocation current = queue.dequeue();
+
+        for (const auto& dir : directions) {
+            int newRow = current.row + dir.first;
+            int newCol = current.col + dir.second;
+
+            if (terrain.inBounds(newRow, newCol) && terrain[newRow][newCol] <= height && !flooded[newRow][newCol]) {
+                flooded[newRow][newCol] = true;
+                queue.enqueue({newRow, newCol});
+            }
+        }
+    }
+
+    return flooded;
 }
 
 
