@@ -1,11 +1,16 @@
 #include "YouGotHufflepuff.h"
 #include "GUI/SimpleTest.h"
+#include "error.h"
 using namespace std;
 
 Question randomQuestionFrom(Set<Question>& questions) {
-    /* TODO: Delete this line and the next two, then implement this function. */
-    (void) questions;
-    return {};
+    if (questions.isEmpty()){
+        error("error 1");
+    }
+    else {
+        Question question = randomElement(questions);
+        return question;
+    }
 }
 
 Map<char, int> scoresFrom(const Map<Question, int>& answers) {
