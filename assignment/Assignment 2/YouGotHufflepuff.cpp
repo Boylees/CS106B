@@ -14,9 +14,28 @@ Question randomQuestionFrom(Set<Question>& questions) {
 }
 
 Map<char, int> scoresFrom(const Map<Question, int>& answers) {
-    /* TODO: Delete this line and the next two, then implement this function. */
-    (void) answers;
-    return {};
+    Map<char, int> finalscores;
+    for (Question var: answers){
+        for (char ch: var.factors){
+            switch(var.factors[ch]){
+            case 1:
+                finalscores[ch] += var.factors[ch] * (-2);
+                break;
+            case 2:
+                finalscores[ch] += var.factors[ch] * (-1);
+                break;
+            case 4:
+                finalscores[ch] += var.factors[ch] * 1;
+                break;
+            case 5:
+                finalscores[ch] += var.factors[ch] * 2;
+                break;
+            default:
+                break;
+            }
+        }
+    }
+    return finalscores;
 }
 
 Map<char, double> normalize(const Map<char, int>& scores) {
